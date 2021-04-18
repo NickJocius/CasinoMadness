@@ -6,7 +6,9 @@ module.exports = {
       colors: {
         red: {
           blood: "rgb(219, 11, 21)",
-        }
+        },
+
+        azure: "#f0ffff",
       }
     },
   },

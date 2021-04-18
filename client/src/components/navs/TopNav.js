@@ -1,0 +1,34 @@
+import React, { useState } from 'react';
+import { FaBars } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+
+const TopNav = () => {
+
+    const [toggled, setToggled] = useState(false);
+
+    const handleToggled = (e) => {
+        e.preventDefault();
+        setToggled(!toggled);
+    }
+
+    return (
+        <nav className={`bg-black flex flex-wrap items-center justify-between p-5 m-0`}>
+            <div className={`flex md:hidden`}>
+                <button id={`hamburgerBtn`} onClick={handleToggled}>
+                    <FaBars className={`hamburger toggle block`} />
+                </button>
+            </div>
+            <div className={`${!toggled ? 'hidden' : 'absolute top-5 left-0'} bg-black md:flex w-full md:w-full text-center text-bold mt-5 md:mt-0 border-t-2 border-red-blood md:border-none`}>
+                <Link to="#" className="block md:inline-block text-white hover:text-red-blood px-3 py-3 border-b-2 border-red-blood md:border-none">Home</Link>
+                <Link to="#" className="block md:inline-block text-white hover:text-red-blood px-3 py-3 border-b-2 border-red-blood md:border-none">Games</Link>
+                <div className={`bg-black md:flex md:justify-end md:w-full md:flex-shrink`}>
+                    <Link to="#" className="block md:inline-block text-white hover:text-red-blood px-3 py-3 border-b-2 border-red-blood md:border-none">Login</Link>
+                    <Link to="#" className="block md:inline-block text-white hover:text-red-blood px-3 py-3 border-b-2 border-red-blood md:border-none">Register</Link>
+                </div>
+            </div>
+
+        </nav>
+    );
+};
+
+export default TopNav;

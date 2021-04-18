@@ -5,5 +5,21 @@
 @layer base {
   * {
     @apply box-border;
+  },
+
+  html {
+    @apply h-screen;
+  },
+
+  body {
+    @apply min-h-screen;
+  },
+
+  .hamburger {
+    @apply text-white;
   }
+}
+
+h1 {
+  color: azure;
 }
