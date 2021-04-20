@@ -1,0 +1,19 @@
+#card {
+    width: auto;
+    transform-style: preserve-3d;
+    will-change: transform;
+    transition: transform 2.0s;
+    transition-timing-function: ease-in-out;
+  }
+  
+  .back  {
+    transform: rotateY(180deg);
+  }
+  
+  /* Stack front and back elements over each other */
+  .front, .back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
+  }

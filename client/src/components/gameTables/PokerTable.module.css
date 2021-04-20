@@ -1,0 +1,16 @@
+
+.Hand {
+    padding: 0;
+    min-height: 90vh;
+    background: radial-gradient(
+      farthest-corner,
+      rgb(194, 1, 1),
+      rgb(131, 1, 1) 30%,
+      rgb(41, 0, 0) 70%,
+      black
+    );
+    border: 15px outset rgba(162, 162, 172, 0.9);
+    border-radius: 20%;
+    box-shadow: black 0px 10px 10px 2px;
+  }
+  

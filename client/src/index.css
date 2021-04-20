@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nosifer&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,19 +10,29 @@
     @apply box-border;
   },
 
-  html {
-    @apply h-screen;
-  },
-
   body {
     @apply min-h-screen;
   },
 
   .hamburger {
     @apply text-white;
+  },
+
+  .GameTitle {
+    @apply text-center;
+    @apply text-4xl;
+    @apply text-gTitle;
+    @apply tracking-widest;
+    @apply font-nosifer;
+    @apply my-3;
+    @apply py-4;
   }
 }
 
-h1 {
-  color: azure;
+.TitleTransform {
+  text-shadow: red 1px 1px 1px, white 0px -4px 0px, black 2px 2px 2px;
+  transform: perspective(350px) rotateX(-35deg);
 }
+
+
+
