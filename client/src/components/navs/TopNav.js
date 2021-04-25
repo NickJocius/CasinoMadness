@@ -1,11 +1,27 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import firebase from 'firebase';
 import { FaBars } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import madLogo from '../../assets/images/madnesslogo.png';
 
 const TopNav = () => {
 
+    let dispatch = useDispatch();
+    let { user } = useSelector((state) => ({ ...state }));
+    let history = useHistory();
+
     const [toggled, setToggled] = useState(false);
+
+    const logout = () => {
+
+        firebase.auth().signOut();
+        dispatch({
+            type: "LOGOUT",
+            payload: null
+        });
+        history.push('/login');
+    }
 
     const handleToggled = (e) => {
         e.preventDefault();
@@ -25,8 +41,16 @@ const TopNav = () => {
                 <Link to="#" className="block md:inline-block text-white hover:text-red-blood px-3 py-3 border-b-2 border-red-blood md:border-none">Home</Link>
                 <Link to="#" className="block md:inline-block text-white hover:text-red-blood px-3 py-3 border-b-2 border-red-blood md:border-none">Games</Link>
                 <div className={`bg-black md:flex md:justify-end md:w-full md:flex-shrink`}>
-                    <Link to="#" className="block md:inline-block text-white hover:text-red-blood px-3 py-3 border-b-2 border-red-blood md:border-none">Login</Link>
-                    <Link to="#" className="block md:inline-block text-white hover:text-red-blood px-3 py-3 border-b-2 border-red-blood md:border-none">Register</Link>
+                    {!user && (
+                        <>
+                            <Link to="/login" className="block md:inline-block text-white hover:text-red-blood px-3 py-3 border-b-2 border-red-blood md:border-none">Login</Link>
+                            <Link to="#" className="block md:inline-block text-white hover:text-red-blood px-3 py-3 border-b-2 border-red-blood md:border-none">Register</Link>
+                        </>
+                    )}
+                    {user && (
+                        <button className={`block md:inline-block text-white hover:text-red-blood px-3 py-3 border-b-2 border-red-blood md:border-none`} onClick={logout}>Logout</button>
+                    )}
+
                 </div>
             </div>
 

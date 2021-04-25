@@ -16,6 +16,7 @@ export const updateProfile = async (id, newProfile, authtoken) => {
     });
 }
 
+
 export const getUserProfile = async (id, authtoken) => {
     return await axios.post(`${process.env.REACT_APP_API}/current-profile`, id, {
         headers: {

@@ -4,7 +4,21 @@ import Card5 from '../cardContainers/Cards5';
 import PokerButtons from '../actionButtons/PokerButtons';
 import styles from './PokerTable.module.css';
 
-const PokerTable = ({ handleDeal, dealDisabled, drawDisabled, handleDraw, standDisabled, handleStand, outcome, faceDown, playerHand, removeFromReplace, replaceFromDeck }) => {
+const PokerTable = ({
+    handleDeal,
+    dealDisabled,
+    drawDisabled,
+    handleDraw,
+    standDisabled,
+    handleStand,
+    outcome,
+    faceDown,
+    playerHand,
+    removeFromReplace,
+    replaceFromDeck,
+    setBet,
+    currentBet
+}) => {
     return (
         <div className={`min-h-screen bg-harley bg-fixed bg-left bg-contain bg-no-repeat`}>
 
@@ -23,6 +37,8 @@ const PokerTable = ({ handleDeal, dealDisabled, drawDisabled, handleDraw, standD
                     handleDraw={handleDraw}
                     standDisabled={standDisabled}
                     handleStand={handleStand}
+                    setBet={setBet}
+                    currentBet={currentBet}
                 />
             </div>
 

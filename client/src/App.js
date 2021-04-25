@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { currentUser } from './functions/auth';
 
 const Home = lazy(() => import('./pages/home/Home'));
+const Login = lazy(() => import('./pages/auth/Login'));
 const Footer = lazy(() => import('./components/footer/Footer'));
 
 // user routes
@@ -74,6 +75,7 @@ function App() {
         <Fragment>
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route exact path="/login" component={Login} />
             <UserRoute exact path="/poker" component={Poker} />
           </Switch>
           <Footer />

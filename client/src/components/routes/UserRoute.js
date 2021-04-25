@@ -12,7 +12,7 @@ const UserRoute = ({ component: Component, children, ...rest }) => {
     // with layout render
     return (
         <>
-            { user && user.token(
+            { user && user.token ? (
                 <Route
                     {...rest}
                     render={routeProps => (
@@ -24,12 +24,9 @@ const UserRoute = ({ component: Component, children, ...rest }) => {
 
                     )}
                 />
-            )}
-            {!user && (
+            ) : (
                 <LoadingToRedirect />
             )}
-
-
         </>
 
     );

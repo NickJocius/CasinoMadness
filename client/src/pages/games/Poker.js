@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUserProfile, updateProfile } from '../../functions/profile';
 import GameHeader from '../../components/headers/GameHeader';
 import PokerTable from '../../components/gameTables/PokerTable';
 import GameButtons from '../../components/actionButtons/GameButtons';
 import Instructions from '../../components/instructions/Card5Instructions';
+import PokerOdds from '../../components/gameOdds/PokerOdds';
+
 
 // deck functions
 import { newDeck, dealTo } from '../../functions/deck';
@@ -13,7 +17,7 @@ import { Hand, dealReplacements } from '../../functions/hand';
 // User InitialState
 const initialState = {
     _id: '',
-    bank: 500,
+    bank: 0,
     wins: { drawpoker: 0 },
     losses: { drawpoker: 0 }
 }
@@ -21,7 +25,11 @@ const initialState = {
 
 const Poker = () => {
 
+    const { user } = useSelector((state) => ({ ...state }));
     const [values, setValues] = useState(initialState);
+    const [wins, setWins] = useState(0);
+    const [loss, setLoss] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     // Deck and Cards
     const [deck, setDeck] = useState([]);
@@ -37,17 +45,55 @@ const Poker = () => {
 
     // Game outcome
     const [outcome, setOutcome] = useState("C'mon puddin, see if you can win!");
-    const updateWins = () => {
-        const curr = values.wins.drawpoker;
-        const update = curr + 1;
-        setValues({ ...values, curr: update });
-    }
-    const updateLosses = () => {
-        const update = values.losses.drawpoker + 1;
-        console.log(update);
-        setValues({ ...values, losses: { ...values, drawpoker: update } });
+
+    const dispatch = useDispatch();
+
+    const loadProfile = () => {
+        let id = user._id;
+        setLoading(true);
+        getUserProfile(id, user.token)
+            .then((res) => {
+                setLoading(false);
+                dispatch({
+                    type: 'GET_PROFILE',
+                    payload: res.data
+                });
+                setValues({ ...values, ...res.data });
+            }).catch((err) => {
+                setLoading(false);
+                console.log(err.message);
+            })
+
     }
 
+    useEffect(() => {
+        loadProfile();
+    }, [updateProfile])
+
+    const updatedProfile = (newValues) => {
+        let userId = user._id;
+        updateProfile(userId, { newValues }, user.token)
+            .then((res) => {
+                dispatch({
+                    type: 'UPDATE_PROFILE',
+                    payload: res.data
+                });
+                setValues({ ...values, ...res.data });
+
+            }).catch((err) => {
+
+                console.log(err.message);
+            })
+    }
+
+    const updateWins = () => {
+        setWins(prevwin => prevwin + 1);
+    }
+    const updatelosses = () => {
+        setLoss(prevloss => prevloss + 1);
+        console.log(loss);
+        // update profile
+    }
 
     // Bet Functions
     const placeBet = () => {
@@ -58,13 +104,18 @@ const Poker = () => {
     const payout = (odds) => {
         const newBank = (values.bank + (currentBet * odds));
         setValues({ ...values, bank: newBank });
+
     }
+
+    const setBet = (event) => { setCurrentBet(parseInt(event.target.value)); }
 
     const makeDeck = () => {
         setDeck([]);
         const myDeck = newDeck();
         setDeck(myDeck);
         setDealDisabled(false);
+        setWins(values.wins.drawpoker);
+        setLoss(values.losses.drawpoker);
     }
 
     const handleDeal = () => {
@@ -77,6 +128,7 @@ const Poker = () => {
                 const myHand = dealTo(deck);
                 setPhand(myHand);
                 placeBet();
+
             } else {
                 setDealDisabled(true);
                 setDrawDisabled(true);
@@ -116,13 +168,16 @@ const Poker = () => {
         setOutcome(handtype);
         let odds = myHand.handOdds();
         if (odds > 0) {
-            console.log(odds);
             updateWins();
         } else if (odds <= 0) {
-            console.log(odds);
-            updateLosses();
+            updatelosses();
         }
         payout(odds);
+        updatedProfile({
+            wins: { drawpoker: wins },
+            losses: { drawpoker: loss }
+        })
+
         setFaceDown(true);
     }
 
@@ -133,6 +188,11 @@ const Poker = () => {
         setDeck([]);
         setPhand([]);
         setReplacing([]);
+    }
+
+    const handleSave = () => {
+        console.log(values);
+        updatedProfile(values);
     }
 
     //Method to replace a card with a one from the deck
@@ -171,12 +231,19 @@ const Poker = () => {
                 playerHand={playerHand}
                 replaceFromDeck={replaceFromDeck}
                 removeFromReplace={removeFromReplace}
+                currentBet={currentBet}
+                setBet={setBet}
             />
             <GameButtons
                 makeDeck={makeDeck}
                 handleReset={handleReset}
+                handleSave={handleSave}
+                bank={values.bank}
+                wins={wins}
+                losses={loss}
             />
             <Instructions />
+            <PokerOdds />
         </main>
     );
 };
