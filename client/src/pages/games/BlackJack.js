@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserProfile, updateProfile } from '../../functions/profile';
 import GameHeader from '../../components/headers/GameHeader';
-import PokerTable from '../../components/gameTables/PokerTable';
+import BlackJTable from '../../components/gameTables/BlackJTable';
 import GameButtons from '../../components/actionButtons/GameButtons';
-import Instructions from '../../components/instructions/Card5Instructions';
-import PokerOdds from '../../components/gameOdds/PokerOdds';
-
+import Instructions from '../../components/instructions/BlackJInstructions';
 
 // deck functions
 import { newDeck, dealTo } from '../../functions/deck';
@@ -18,12 +16,11 @@ import { Hand, dealReplacements } from '../../functions/hand';
 const initialState = {
     _id: '',
     bank: 0,
-    wins: { drawpoker: 0 },
-    losses: { drawpoker: 0 }
+    wins: { blackjack: 0 },
+    losses: { blackjack: 0 }
 }
 
-
-const Poker = () => {
+const BlackJack = () => {
 
     const { user } = useSelector((state) => ({ ...state }));
     const [values, setValues] = useState(initialState);
@@ -34,6 +31,7 @@ const Poker = () => {
     // Deck and Cards
     const [deck, setDeck] = useState([]);
     const [playerHand, setPhand] = useState([]);
+    const [dealerHand, setDealerHand] = useState([]);
     const [replacing, setReplacing] = useState([]);
     const [faceDown, setFaceDown] = useState(false);
 
@@ -43,8 +41,10 @@ const Poker = () => {
     const [drawDisabled, setDrawDisabled] = useState(true);
     const [standDisabled, setStandDisabled] = useState(true);
 
+    let componentMounted = true;
+
     // Game outcome
-    const [outcome, setOutcome] = useState("C'mon puddin, see if you can win!");
+    const [outcome, setOutcome] = useState("Man of Steel means nothing here!");
 
     const dispatch = useDispatch();
 
@@ -67,8 +67,11 @@ const Poker = () => {
     }
 
     useEffect(() => {
-        loadProfile();
-    }, [updateProfile])
+        if (componentMounted) {
+            loadProfile();
+        }
+        return () => { componentMounted = false; }
+    }, [])
 
     const updatedProfile = (newValues) => {
         let userId = user._id;
@@ -118,6 +121,13 @@ const Poker = () => {
         setLoss(values.losses.drawpoker);
     }
 
+    const reShuffle = () => {
+        setOutcome("Re-shuffling Deck");
+        handleReset();
+        makeDeck();
+        setOutcome("Lets do this baby!");
+    }
+
     const handleDeal = () => {
         setDealDisabled(true);
         setDrawDisabled(false);
@@ -125,7 +135,9 @@ const Poker = () => {
         if (deck.length > 5) {
             setFaceDown(false);
             if (values.bank >= 0 && values.bank >= currentBet) {
-                const myHand = dealTo(deck, 5);
+                const myHand = dealTo(deck, 2);
+                const dHand = dealTo(deck, 2);
+                setDealerHand(dHand);
                 setPhand(myHand);
                 placeBet();
 
@@ -138,25 +150,6 @@ const Poker = () => {
         } else {
             reShuffle();
         }
-    }
-
-    const reShuffle = () => {
-        setOutcome("Re-shuffling Deck");
-        handleReset();
-        makeDeck();
-        setOutcome("Lets do this baby!");
-    }
-
-    const handleDraw = () => {
-        setDrawDisabled(true);
-        if (deck.length >= replacing.length) {
-            const newPHand = dealReplacements(replacing, playerHand, deck, setDeck);
-            setPhand(newPHand);
-            setReplacing([]);
-        } else {
-            reShuffle();
-        }
-
     }
 
     const handleStand = () => {
@@ -181,6 +174,18 @@ const Poker = () => {
         setFaceDown(true);
     }
 
+    const handleDraw = () => {
+        setDrawDisabled(true);
+        if (deck.length >= replacing.length) {
+            const newPHand = dealReplacements(replacing, playerHand, deck, setDeck);
+            setPhand(newPHand);
+            setReplacing([]);
+        } else {
+            reShuffle();
+        }
+
+    }
+
     const handleReset = () => {
         setDealDisabled(true);
         setDrawDisabled(true);
@@ -188,11 +193,6 @@ const Poker = () => {
         setDeck([]);
         setPhand([]);
         setReplacing([]);
-    }
-
-    const handleSave = () => {
-        console.log(values);
-        updatedProfile(values);
     }
 
     //Method to replace a card with a one from the deck
@@ -216,19 +216,25 @@ const Poker = () => {
     }
 
 
+    const handleSave = () => {
+        console.log(values);
+        updatedProfile(values);
+    }
+
     return (
         <main className={`w-full min-h-screen m-0 p-2 bg-black`}>
-            <GameHeader title={"5 Card Draw"} titleBG={"cardspread"} />
-            <PokerTable
+            <GameHeader title={"Black Jack"} titleBG={"blood1"} />
+            <BlackJTable
+                outcome={outcome}
                 handleDeal={handleDeal}
                 dealDisabled={dealDisabled}
                 handleDraw={handleDraw}
                 drawDisabled={drawDisabled}
                 standDisabled={standDisabled}
                 handleStand={handleStand}
-                outcome={outcome}
                 faceDown={faceDown}
                 playerHand={playerHand}
+                dealerHand={dealerHand}
                 replaceFromDeck={replaceFromDeck}
                 removeFromReplace={removeFromReplace}
                 currentBet={currentBet}
@@ -243,9 +249,8 @@ const Poker = () => {
                 losses={loss}
             />
             <Instructions />
-            <PokerOdds />
         </main>
     );
 };
 
-export default Poker;
+export default BlackJack;

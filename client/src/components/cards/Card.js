@@ -28,7 +28,7 @@ const Card = ({ faceDown, index, rank, suit, removeFromReplace, replaceFromDeck 
     }
 
     return (
-        <div id={`${styles.card}`} className={` h-16 sm:h-24 md:h-36 bg-transparent rounded-md`} onClick={discard}>
+        <div id={`${styles.card}`} className={` h-20 sm:h-32 md:h-40 bg-transparent rounded-md`} onClick={discard}>
             <img
                 className={`w-full h-full rounded-md ${faceDown === true || flip === true ? `${styles.front}` : `${styles.back}`} object-scale-down md:object-contain`}
                 src={CardBack}

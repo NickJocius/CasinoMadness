@@ -1,3 +1,5 @@
+const { urlencoded } = require("express");
+
 module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   darkMode: false, // or 'media' or 'class'
@@ -21,7 +23,10 @@ module.exports = {
       backgroundImage: theme => ({
         'cFloor': "url('/src/assets/images/cainoFloor.jpg')",
         'harley': "url('/src/assets/images/harley.png')",
-        'cardspread': "url('/src/assets/images/cards-spread.png')"
+        'cardspread': "url('/src/assets/images/cards-spread.png')",
+        'lex': "url('/src/assets/images/lex.png')",
+        'superman': "url('/src/assets/images/superman.png')",
+        'blood1': "url('/src/assets/images/blood1.png')"
       }),
 
       backgroundSize: {

@@ -1,0 +1,22 @@
+#BlackJTable {
+    background-image: url("../../assets/images/superman.png"), url("../../assets/images/lex.png");
+    background-size: contain, 40%;
+    background-repeat: no-repeat, no-repeat;
+    background-position: left,right;
+    background-attachment: fixed, fixed;
+}
+
+.Hand {
+    padding: 0;
+    min-height: 90vh;
+    background: radial-gradient(
+      farthest-corner,
+      rgb(1, 91, 194),
+      rgb(1, 21, 131) 30%,
+      rgb(0, 3, 41) 70%,
+      black
+    );
+    border: 15px outset rgba(162, 162, 172, 0.9);
+    border-radius: 20%;
+    box-shadow: black 0px 10px 10px 2px;
+  }

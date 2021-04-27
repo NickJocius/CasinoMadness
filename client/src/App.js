@@ -14,6 +14,7 @@ const Footer = lazy(() => import('./components/footer/Footer'));
 // user routes
 const UserRoute = lazy(() => import('./components/routes/UserRoute'));
 const Poker = lazy(() => import('./pages/games/Poker'));
+const BlackJack = lazy(() => import('./pages/games/BlackJack'));
 
 // admin routes
 
@@ -77,6 +78,7 @@ function App() {
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
             <UserRoute exact path="/poker" component={Poker} />
+            <UserRoute exact path="/blackjack" component={BlackJack} />
           </Switch>
           <Footer />
         </Fragment>

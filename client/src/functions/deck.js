@@ -43,8 +43,8 @@ export const newDeck = () => {
 }
 
 //Method to deal cards from the deck into a  hand
-export const dealTo = (deck) => {
-    let pCards = new Array(5);
+export const dealTo = (deck, size) => {
+    let pCards = new Array(size);
     for (let i = 0; i < pCards.length; i++) {
         pCards[i] = deck.shift();
     }
