@@ -1,17 +1,18 @@
 import React from 'react';
-import Card from '../cards/Card';
+import BJCard from '../cards/BJCard';
 
 
-const Cards2 = ({ faceDown, Hand }) => {
+const DealerCard2 = ({ faceDown, Hand }) => {
 
 
 
     return (
-        <div className={`grid grid-cols-${Hand.length} p-4 gap-6 min-h-full  md:mb-16 justify-self-end flex-grow`}>
+        <div className={`grid grid-cols-2 p-4 gap-8 min-h-full  md:mb-16 justify-self-end flex-grow`}>
             {Hand.map((c, index) =>
-                <Card
+                <BJCard
                     faceDown={faceDown}
                     key={index}
+                    index={index}
                     rank={c.rankValue}
                     suit={c.suit}
                 />
@@ -20,4 +21,4 @@ const Cards2 = ({ faceDown, Hand }) => {
     );
 };
 
-export default Cards2;
+export default DealerCard2;

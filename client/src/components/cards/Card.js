@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import CardBack from '../../assets/images/cardback.png';
 import styles from './Card.module.css';
 
-const Card = ({ faceDown, index, rank, suit, removeFromReplace, replaceFromDeck }) => {
+const Card = ({ faceDown, rank, suit, removeFromReplace, replaceFromDeck }) => {
 
     const [flip, setFlip] = useState(false);
 

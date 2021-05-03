@@ -2,6 +2,7 @@ import React from 'react';
 import CardStack from '../cards/CardStack';
 import PokerButtons from '../actionButtons/PokerButtons';
 import Card2 from '../cardContainers/Card2';
+import DealerCard2 from '../cardContainers/DealerCard2';
 import styles from './BlackJTable.module.css';
 
 const BlackJTable = ({
@@ -14,8 +15,6 @@ const BlackJTable = ({
     faceDown,
     playerHand,
     dealerHand,
-    removeFromReplace,
-    replaceFromDeck,
     handleStand,
     setBet,
     currentBet
@@ -26,14 +25,13 @@ const BlackJTable = ({
                 <CardStack
                     outcome={outcome}
                 />
+                <DealerCard2
+                    faceDown={faceDown}
+                    Hand={dealerHand}
+                />
                 <Card2
                     faceDown={faceDown}
                     Hand={playerHand}
-                    replaceFromDeck={replaceFromDeck}
-                    removeFromReplace={removeFromReplace}
-                />
-                <Card2
-                    Hand={dealerHand}
                 />
                 <PokerButtons
                     handleDeal={handleDeal}

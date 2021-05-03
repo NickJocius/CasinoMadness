@@ -10,7 +10,7 @@ import Instructions from '../../components/instructions/BlackJInstructions';
 import { newDeck, dealTo } from '../../functions/deck';
 
 // Hand Class
-import { Hand, dealReplacements } from '../../functions/hand';
+import { Hand, dealCard } from '../../functions/hand';
 
 // User InitialState
 const initialState = {
@@ -31,8 +31,9 @@ const BlackJack = () => {
     // Deck and Cards
     const [deck, setDeck] = useState([]);
     const [playerHand, setPhand] = useState([]);
+    const [playerTotal, setPlayerTotal] = useState(0);
     const [dealerHand, setDealerHand] = useState([]);
-    const [replacing, setReplacing] = useState([]);
+    const [dealerTotal, setDealerTotal] = useState(0);
     const [faceDown, setFaceDown] = useState(false);
 
     // Bet and Buttons UI
@@ -73,6 +74,19 @@ const BlackJack = () => {
         return () => { componentMounted = false; }
     }, [])
 
+    useEffect(() => {
+        if (componentMounted) {
+            const phand = new Hand(playerHand);
+            let pTotal = phand.handTotal();
+            const dhand = new Hand(dealerHand);
+            let dTotal = dhand.handTotal();
+            setDealerTotal(dTotal);
+            setPlayerTotal(pTotal);
+        }
+        return () => { componentMounted = false; }
+
+    }, [playerHand, dealerHand]);
+
     const updatedProfile = (newValues) => {
         let userId = user._id;
         updateProfile(userId, { newValues }, user.token)
@@ -89,14 +103,9 @@ const BlackJack = () => {
             })
     }
 
-    const updateWins = () => {
-        setWins(prevwin => prevwin + 1);
-    }
-    const updatelosses = () => {
-        setLoss(prevloss => prevloss + 1);
-        console.log(loss);
-        // update profile
-    }
+    // update wins/losses
+    const updateWins = () => { setWins(prevwin => prevwin + 1); }
+    const updatelosses = () => { setLoss(prevloss => prevloss + 1); }
 
     // Bet Functions
     const placeBet = () => {
@@ -107,7 +116,6 @@ const BlackJack = () => {
     const payout = (odds) => {
         const newBank = (values.bank + (currentBet * odds));
         setValues({ ...values, bank: newBank });
-
     }
 
     const setBet = (event) => { setCurrentBet(parseInt(event.target.value)); }
@@ -132,7 +140,7 @@ const BlackJack = () => {
         setDealDisabled(true);
         setDrawDisabled(false);
         setStandDisabled(false);
-        if (deck.length > 5) {
+        if (deck.length > 4) {
             setFaceDown(false);
             if (values.bank >= 0 && values.bank >= currentBet) {
                 const myHand = dealTo(deck, 2);
@@ -140,7 +148,6 @@ const BlackJack = () => {
                 setDealerHand(dHand);
                 setPhand(myHand);
                 placeBet();
-
             } else {
                 setDealDisabled(true);
                 setDrawDisabled(true);
@@ -157,33 +164,35 @@ const BlackJack = () => {
         setDrawDisabled(true);
         setDealDisabled(false);
         const myHand = new Hand(playerHand);
-        let handtype = myHand.handType();
+        let handtype = myHand.bjHandType();
         setOutcome(handtype);
-        let odds = myHand.handOdds();
+        let odds = myHand.bjOdds();
         if (odds > 0) {
             updateWins();
         } else if (odds <= 0) {
             updatelosses();
         }
         payout(odds);
-        updatedProfile({
-            wins: { drawpoker: wins },
-            losses: { drawpoker: loss }
-        })
+        handleSave();
+        // updatedProfile({
+        //     wins: { blackjack: wins },
+        //     losses: { blackjack: loss }
+        // })
 
         setFaceDown(true);
     }
 
-    const handleDraw = () => {
-        setDrawDisabled(true);
-        if (deck.length >= replacing.length) {
-            const newPHand = dealReplacements(replacing, playerHand, deck, setDeck);
-            setPhand(newPHand);
-            setReplacing([]);
+    function handleDraw() {
+
+        if (deck.length > 0 && dealerTotal < 21) {
+            const newCard = dealCard(deck, setDeck);
+            setPhand(() => [...playerHand, newCard]);
+        } else if (dealerHand === 21) {
+            handleStand();
         } else {
+            setDrawDisabled(true);
             reShuffle();
         }
-
     }
 
     const handleReset = () => {
@@ -192,29 +201,8 @@ const BlackJack = () => {
         setStandDisabled(true);
         setDeck([]);
         setPhand([]);
-        setReplacing([]);
+        setDealerHand([]);
     }
-
-    //Method to replace a card with a one from the deck
-    const replaceFromDeck = (rankValue, suit) => {
-        const newHand = [...playerHand];
-
-        // loop through playerhand
-        for (let i = 0; i < newHand.length; i++) {
-            // check if card is equal to any card in hand
-            if (newHand[i].rankValue === rankValue && newHand[i].suit === suit) {
-                // assign new card equal to hand in playerhand
-                let card = newHand[i];
-                setReplacing([...replacing, card]);
-            }
-        }
-    }
-
-    const removeFromReplace = (rank, suit) => {
-        const newArray = replacing.filter((c) => (c.rank !== rank && c.suit !== suit));
-        setReplacing(newArray);
-    }
-
 
     const handleSave = () => {
         console.log(values);
@@ -235,8 +223,6 @@ const BlackJack = () => {
                 faceDown={faceDown}
                 playerHand={playerHand}
                 dealerHand={dealerHand}
-                replaceFromDeck={replaceFromDeck}
-                removeFromReplace={removeFromReplace}
                 currentBet={currentBet}
                 setBet={setBet}
             />

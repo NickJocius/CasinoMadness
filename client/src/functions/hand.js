@@ -5,6 +5,60 @@ export class Hand {
         this.cards = [...playerHand];
     } //end Hand Constructor
 
+    // BlackJack methods
+    // method to total up players hands
+    handTotal() {
+        let total = 0;
+        let rTotal = 0;
+        let result = this.cards.filter(c => c.rankValue != 14);
+
+        for (const c of result) {
+            rTotal += c.rankValue;
+        }
+        for (const c of this.cards) {
+            if (c.rankValue > 10 && c.rankValue < 14) {
+                total += 10;
+            } else if (c.rankValue === 14 && rTotal === 20) {
+                total += 1;
+            } else if (c.rankValue === 14 && rTotal <= 10) {
+                total += 11;
+            } else if (c.rankValue === 14 && rTotal > 10) {
+                total += 1;
+            } else {
+                total += c.rankValue;
+            }
+        }
+        return total;
+    }
+
+    // test hand for blackjack
+    hasBlackJack() {
+        let finalTotal = this.handTotal();
+        if (finalTotal === 21) {
+            return true;
+        }
+    }
+    // returns outcome text
+    bjHandType() {
+        if (this.hasBlackJack()) {
+            return "BlackJack!";
+        } else {
+            return "Not a winner."
+        }
+    }
+
+    // returns odds
+    bjOdds() {
+        switch (this.bjHandType()) {
+            case "BlackJack!":
+                return 5;
+            case "Not a winner.":
+                return 0;
+        }
+    }
+
+    // Poker Methods
+    // 
     highcard() {
         return Math.max.call(
             Hand,
@@ -139,6 +193,16 @@ export class Hand {
 
 }
 
+// function for adding new card to hand
+export const dealCard = (deck, setDeck) => {
+
+    const newDeck = [...deck];
+    const newCard = newDeck.shift();
+    setDeck(newDeck);
+    return newCard;
+}
+
+// function for dealing replacement cards to hand
 export const dealReplacements = (oldCards, playerHand, deck, setDeck) => {
     const oldPHand = [...playerHand];
     const newDeck = [...deck];
