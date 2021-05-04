@@ -38,21 +38,36 @@ export class Hand {
             return true;
         }
     }
+
+    // compare dealer and player hands
+    isWinner(dealerTotal) {
+        if (this.hasBlackJack() && dealerTotal != 21 || this.handTotal() > dealerTotal) {
+            return true;
+        }
+    }
+
     // returns outcome text
-    bjHandType() {
-        if (this.hasBlackJack()) {
+    bjHandType(dealerTotal) {
+        if (this.hasBlackJack() && this.isWinner(dealerTotal)) {
             return "BlackJack!";
+        } else if (!this.hasBlackJack() && this.isWinner(dealerTotal)) {
+            return "Winner";
         } else {
             return "Not a winner."
         }
     }
 
     // returns odds
-    bjOdds() {
-        switch (this.bjHandType()) {
+    bjOdds(dealerTotal) {
+
+        switch (this.bjHandType(dealerTotal)) {
             case "BlackJack!":
                 return 5;
+            case "Winner":
+                return 5;
             case "Not a winner.":
+                return 0;
+            default:
                 return 0;
         }
     }
@@ -243,3 +258,4 @@ export const dealReplacements = (oldCards, playerHand, deck, setDeck) => {
 
     return oldPHand;
 }
+

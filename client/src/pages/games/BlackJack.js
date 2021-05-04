@@ -95,7 +95,7 @@ const BlackJack = () => {
                     type: 'UPDATE_PROFILE',
                     payload: res.data
                 });
-                setValues({ ...values, ...res.data });
+                //setValues({ ...values, ...res.data });
 
             }).catch((err) => {
 
@@ -104,7 +104,10 @@ const BlackJack = () => {
     }
 
     // update wins/losses
-    const updateWins = () => { setWins(prevwin => prevwin + 1); }
+    const updateWins = () => {
+        setWins(prevwin => prevwin + 1);
+
+    }
     const updatelosses = () => { setLoss(prevloss => prevloss + 1); }
 
     // Bet Functions
@@ -164,16 +167,21 @@ const BlackJack = () => {
         setDrawDisabled(true);
         setDealDisabled(false);
         const myHand = new Hand(playerHand);
-        let handtype = myHand.bjHandType();
+        const dHand = new Hand(dealerHand);
+        let dTotal = dHand.handTotal();
+        let handtype = myHand.bjHandType(dTotal);
         setOutcome(handtype);
-        let odds = myHand.bjOdds();
+        let odds = myHand.bjOdds(dTotal);
+        console.log(odds);
         if (odds > 0) {
             updateWins();
         } else if (odds <= 0) {
             updatelosses();
         }
         payout(odds);
-        handleSave();
+        setValues({ ...values, wins: { ...values.wins, blackjack: wins } });
+        //setValues({ ...values, losses: { ...values.losses, blackjack: loss } });
+        //handleSave();
         // updatedProfile({
         //     wins: { blackjack: wins },
         //     losses: { blackjack: loss }
