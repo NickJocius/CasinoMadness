@@ -21,6 +21,7 @@ const BJCard = ({ faceDown, index, rank, suit }) => {
 
 
     return (
+
         <div id={`${styles.card}`} className={` h-20 sm:h-32 md:h-40 bg-transparent rounded-md`}>
             <img
                 className={`w-full h-full rounded-md ${faceDown === false && flip === true ? `${styles.front}` : `${styles.back}`} object-scale-down md:object-contain`}
@@ -33,6 +34,8 @@ const BJCard = ({ faceDown, index, rank, suit }) => {
                 alt={src}
             />
         </div>
+
+
     );
 };
 

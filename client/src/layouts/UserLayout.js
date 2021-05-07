@@ -8,6 +8,7 @@ const UserLayout = ({ children, ...rest }) => {
             <div className={`min-h-screen w-full`}>
                 {children}
             </div>
+
         </div>
     );
 };

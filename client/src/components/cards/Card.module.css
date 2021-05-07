@@ -1,10 +1,12 @@
 #card {
     width: auto;
+    position: relative;
     transform-style: preserve-3d;
     will-change: transform;
-    transition: transform 2.0s;
+    transition: transform 5.0s;
     transition-timing-function: ease-in-out;
   }
+
   
   .back  {
     transform: rotateY(180deg);

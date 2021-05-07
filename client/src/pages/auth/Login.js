@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import loadgif from '../../assets/images/loading.gif';
 import { createOrUpdateUser } from '../../functions/auth';
 
+
 const Login = ({ history }) => {
 
     const [email, setEmail] = useState("");
@@ -112,69 +113,102 @@ const Login = ({ history }) => {
     };
 
     const loginForm = () => {
-        return <form onSubmit={handleSubmit}>
-            <div className="form-group">
-                <input
-                    type="email"
-                    className="form-control"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    placeholder="Enter email"
-                    autoFocus
-                />
+        return <form onSubmit={handleSubmit} className={`mt-8 space-y-6`}>
+            <input type="hidden" name="remember" value="true" />
+            <div className="rounded-md shadow-sm -space-y-px">
+                <div>
+                    <label htmlFor="email" className={`sr-only`}>Email</label>
+                    <input
+                        type="email"
+                        id={`email`}
+                        name="email"
+                        type="email"
+                        autoComplete="email"
+                        required
+                        className="apperance-none rounded-non relative block w-full px-3 py-2 my-1"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        placeholder="Enter email"
+                        autoFocus
+                    />
+                </div>
+                <div>
+                    <label htmlFor="password" className="sr-only">Password</label>
+                    <input
+                        id={`password`}
+                        name="password"
+                        autoComplete="current-password"
+                        required
+                        type="password"
+                        className="appearance-non rounded-none relative block w-full px-3 py-2 my-1"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        placeholder="Enter password"
+                    />
+                </div>
+            </div>
+            <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                    <input id="remember_me" name="remember_me" type="checkbox" className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
+                    <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-900">
+                        Remember me
+                    </label>
+                </div>
+                <div className="text-sm">
+                    <Link href="/forgot/password" className="font-medium text-indigo-600 hover:text-indigo-500">
+                        Forgot your password?
+                    </Link>
+                </div>
             </div>
 
-            <div className="form-group  my-3">
-                <input
-                    type="password"
-                    className="form-control"
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                    placeholder="Enter password"
-                />
+            <div>
+                <button
+                    onClick={handleSubmit}
+                    className={`group relative w-full flex justify-center border border-transparent my-2 bg-indigo-600 hover:bg-gray-400 text-white font-bold py-2 px-4 rounded-full`}
+                    disabled={!email || password.length < 6}
+                >
+                    <span className={`absolute left-2 inset-y-0 flex items-center pl-3 text-white`}><AiFillMail /></span>
+                    <span>Login With Email/Password</span>
+                </button>
             </div>
 
-
-            <button
-                onClick={handleSubmit}
-                className={`bg-gray-300 hover:bg-gray-400 text-white font-bold py-2 px-4 rounded-full`}
-                disabled={!email || password.length < 6}
-            >
-                <AiFillMail />
-                <span>Login With Email/Password</span>
-            </button>
         </form>
     };
 
     return (
 
-        <div className="h-screen">
-            <div className="row p-5 w-100">
-                <div className="col-md-6 offset-md-3">
-                    {!loading ? (
-                        <h4 className="text-center">Login</h4>)
-                        : (
-                            <div className="d-flex justify-content-center align-content-center">
-                                <img src={loadgif} alt="loading gif" className="m-auto" />
-                            </div>
+        <div className="min-h-screen flex items-center justify-center">
 
-                        )}
+            <div className={`max-w-md w-full space-y-8`}>
+                {!loading ? (
+                    <div>
+                        <h4 className="text-center mt-6 text-5xl font-bangers font-extrabold">Login</h4>
+                        <p className={`mt-2 text-center text-md text-red-700`}>Login in to your account</p>
+                    </div>
+                )
+                    : (
+                        <div className="d-flex justify-content-center align-content-center">
+                            <img src={loadgif} alt="loading gif" className="m-auto" />
+                        </div>
 
+                    )}
+                <div>
                     {loginForm()}
                     <button
                         onClick={googleLogin}
-                        className={`bg-red hover:bg-red-400 text-white font-bold py-2 px-4 rounded-full`}
+                        className={`group relative w-full justify-center border border-transparent bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 rounded-full`}
                     >
-                        <AiFillGoogleCircle />
+                        <span className={`absolute left-2 inset-y-0 flex items-center pl-3 text-white`}><AiFillGoogleCircle /></span>
+
                         <span>Login With Google</span>
                     </button>
-                    <div className="d-flex justify-content-center">
-                        <Link to="/forgot/password" className="text-center">Forgot Password</Link>
-                    </div>
-
                 </div>
             </div>
+
+
+
         </div>
+
     );
 };
 

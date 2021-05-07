@@ -26,17 +26,27 @@ module.exports = {
         'cardspread': "url('/src/assets/images/cards-spread.png')",
         'lex': "url('/src/assets/images/lex.png')",
         'superman': "url('/src/assets/images/superman.png')",
-        'blood1': "url('/src/assets/images/blood1.png')"
+        'blood1': "url('/src/assets/images/blood1.png')",
+        'moneypile': "url('/src/assets/images/moneypile.png')"
       }),
 
       backgroundSize: {
+        '20': '20%',
+        '30': '30%',
         '50': '50%',
         '75': '75%'
+      },
+
+      scale: {
+        '10': '.10',
+        '95': '.95'
       }
     },
   },
   variants: {
-    extend: {},
+    extend: {
+
+    },
   },
   plugins: [],
 }
