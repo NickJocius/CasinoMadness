@@ -113,13 +113,12 @@ const Login = ({ history }) => {
     };
 
     const loginForm = () => {
-        return <form onSubmit={handleSubmit} className={`mt-8 space-y-6`}>
+        return <form onSubmit={handleSubmit} className={`mt-8 space-y-6 outline-red-blood`}>
             <input type="hidden" name="remember" value="true" />
             <div className="rounded-md shadow-sm -space-y-px">
                 <div>
                     <label htmlFor="email" className={`sr-only`}>Email</label>
                     <input
-                        type="email"
                         id={`email`}
                         name="email"
                         type="email"

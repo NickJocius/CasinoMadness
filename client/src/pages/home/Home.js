@@ -20,7 +20,7 @@ const Home = () => {
                         data-aos="fade-up"
                         data-aos-easing="ease-out-cubic"
                         data-aos-delay="600"
-                    ><Link>Start Playing!</Link></button>
+                    ><Link to="/register">Start Playing!</Link></button>
                 </div>
                 <div className={`flex flex-col items-center bg-cFloor bg-no-repeat bg-cover`}>
                     <h1 className={`text-center py-4 my-4 text-azure font-bangers text-2xl md:text-4xl`}>Our Games</h1>
