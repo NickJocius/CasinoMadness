@@ -10,6 +10,7 @@ import { currentUser } from './functions/auth';
 const Home = lazy(() => import('./pages/home/Home'));
 const Login = lazy(() => import('./pages/auth/Login'));
 const Register = lazy(() => import('./pages/auth/Register'));
+const RegisterComplete = lazy(() => import('./pages/auth/RegisterComplete'));
 const Footer = lazy(() => import('./components/footer/Footer'));
 
 // user routes
@@ -80,6 +81,7 @@ function App() {
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
+            <Route exact path="/register/complete" component={RegisterComplete} />
             <UserRoute exact path="/poker" component={Poker} />
             <UserRoute exact path="/blackjack" component={BlackJack} />
             <UserRoute exact path="/gothamslots" component={GothamSlots} />
