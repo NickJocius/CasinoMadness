@@ -27,7 +27,8 @@ module.exports = {
         'lex': "url('/src/assets/images/lex.png')",
         'superman': "url('/src/assets/images/superman.png')",
         'blood1': "url('/src/assets/images/blood1.png')",
-        'moneypile': "url('/src/assets/images/moneypile.png')"
+        'moneypile': "url('/src/assets/images/moneypile.png')",
+        'cardschips': "url('/src/assets/images/cardsChips.png')"
       }),
 
       backgroundSize: {

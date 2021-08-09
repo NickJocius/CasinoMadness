@@ -28,7 +28,7 @@ const Home = () => {
                         <GamePreview img={"poker.png"} theme={"Harley Quinn and Joker"} msg={"Join the fun with 5 card draw.  Try your luck against the house."} route={"/poker"} />
                         <GamePreview img={"blackjack.png"} theme={"Superman and Lex Luther"} msg={"Classic BlackJack with a super-hero twist.  Try your luck against the dealer."} route={"/blackjack"} />
                         <GamePreview img={"coming.png"} theme={"Two-Face"} msg={"A roll of the dice is all you need. Classic craps is where it's at."} />
-                        <GamePreview img={"coming.png"} theme={"Harley Quinn and Joker"} msg={"Join the fun with 5 card draw.  Try your luck against the house."} />
+                        <GamePreview img={"coming.png"} theme={"Gotham Slots"} msg={"Nothing like the sounds of money to brighten the darkness of Gotham City."} route={"/gothamslots"} />
                         <GamePreview img={"coming.png"} theme={"Harley Quinn and Joker"} msg={"Join the fun with 5 card draw.  Try your luck against the house."} />
                         <GamePreview img={"coming.png"} theme={"Harley Quinn and Joker"} msg={"Join the fun with 5 card draw.  Try your luck against the house."} />
                         <GamePreview img={"coming.png"} theme={"Harley Quinn and Joker"} msg={"Join the fun with 5 card draw.  Try your luck against the house."} />
