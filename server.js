@@ -5,7 +5,10 @@ const cors = require("cors");
 const fs = require('fs');
 const path = require("path");
 
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+
 
 // app
 const app = express();
