@@ -27,7 +27,7 @@ app.use(express.json());
 app.use(cors());
 
 //routes middleware
-fs.readdirSync('./routes').map((r) => app.use("/api", require('./routes/' + r)));
+fs.readdirSync('./routes').map((r) => app.use('/api', require('./routes/' + r)));
 
 // production serve static assets
 if (process.env.NODE_ENV === 'production') {
