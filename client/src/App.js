@@ -1,5 +1,7 @@
 import React, { useEffect, lazy, Fragment, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -76,6 +78,7 @@ function App() {
           <h2>ResonanceWebDesign</h2>
         </div>
       }>
+        <ToastContainer />
         <Fragment>
           <Switch>
             <Route exact path="/" component={Home} />
