@@ -5,8 +5,11 @@ import { Link } from 'react-router-dom'
 const Footer = () => {
 
     const currentYear = () => {
-        let cYear = new Date().getFullYear();
-        return cYear;
+        return new Date().getFullYear();
+    }
+
+    const handleResClick = () => {
+        window.open("https://www.resonancewebdesign.com/", "_blank");
     }
 
     return (
@@ -19,7 +22,7 @@ const Footer = () => {
                 </div>
                 <div className={`flex flex-col items-center py-2 font-bangers text-red-blood`}>
                     <Link className={`hover:underline`}>Support</Link>
-                    <Link className={`hover:underline`}>ResonanceWeb</Link>
+                    <a onClick={handleResClick} className={`hover:underline cursor-pointer`}>ResonanceWeb</a>
                     <Link className={`hover:underline`}>Unsubscribe</Link>
                 </div>
             </div>
