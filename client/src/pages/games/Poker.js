@@ -7,7 +7,6 @@ import GameButtons from '../../components/actionButtons/GameButtons';
 import Instructions from '../../components/instructions/Card5Instructions';
 import PokerOdds from '../../components/gameOdds/PokerOdds';
 
-
 // deck functions
 import { newDeck, dealTo } from '../../functions/deck';
 
@@ -21,7 +20,6 @@ const initialState = {
     wins: { drawpoker: 0 },
     losses: { drawpoker: 0 }
 }
-
 
 const Poker = () => {
 
@@ -88,12 +86,10 @@ const Poker = () => {
 
     const updateWins = () => {
         setWins(prevwin => prevwin + 1);
-    }
+    }// end updateWins()
     const updatelosses = () => {
         setLoss(prevloss => prevloss + 1);
-        console.log(loss);
-        // update profile
-    }
+    }// end updateLosses()
 
     // Bet Functions
     const placeBet = () => {
@@ -173,10 +169,7 @@ const Poker = () => {
             updatelosses();
         }
         payout(odds);
-        updatedProfile({
-            wins: { drawpoker: wins },
-            losses: { drawpoker: loss }
-        })
+
 
         setFaceDown(true);
     }
@@ -192,28 +185,25 @@ const Poker = () => {
 
     const handleSave = () => {
         console.log(values);
-        updatedProfile(values);
+        updatedProfile({
+            bank: values.bank,
+            wins: { drawpoker: wins },
+            losses: { drawpoker: loss }
+        })
     }
 
     //Method to replace a card with a one from the deck
     const replaceFromDeck = (rankValue, suit) => {
         const newHand = [...playerHand];
 
-        // loop through playerhand
-        for (let i = 0; i < newHand.length; i++) {
-            // check if card is equal to any card in hand
-            if (newHand[i].rankValue === rankValue && newHand[i].suit === suit) {
-                // assign new card equal to hand in playerhand
-                let card = newHand[i];
-                setReplacing([...replacing, card]);
-            }
-        }
-    }
+        let card = newHand.find(value => value.rankValue === rankValue && value.suit === suit);
+        setReplacing([...replacing, card]);
+    } // end replaceFromeDeck()
 
     const removeFromReplace = (rank, suit) => {
         const newArray = replacing.filter((c) => (c.rank !== rank && c.suit !== suit));
         setReplacing(newArray);
-    }
+    }// end removeFromReplace()
 
 
     return (

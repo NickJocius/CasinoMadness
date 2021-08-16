@@ -10,7 +10,7 @@ export class Hand {
     handTotal() {
         let total = 0;
         let rTotal = 0;
-        let result = this.cards.filter(c => c.rankValue != 14);
+        let result = this.cards.filter(c => c.rankValue !== 14);
 
         for (const c of result) {
             rTotal += c.rankValue;
@@ -115,6 +115,7 @@ export class Hand {
     }
 
     //Tests for duplicates in the hand
+
     hasSets() {
         //handSets summarizes the duplicates in the hand
         let handSets = {};
@@ -133,20 +134,20 @@ export class Hand {
 
         //goes through each of the properties in the handSets object
         for (let cardRank in handSets) {
-            if (handSets[cardRank] === 4) {
+            if (handSets[cardRank] == 4) {
                 sets = "Four of a kind";
             }
-            if (handSets[cardRank] === 3) {
-                if (sets === "Pair") {
+            if (handSets[cardRank] == 3) {
+                if (sets == "Pair") {
                     sets = "Full House";
                 } else {
                     sets = "Three of a Kind";
                 }
             }
-            if (handSets[cardRank] === 2) {
-                if (sets === "Three of a Kind") {
+            if (handSets[cardRank] == 2) {
+                if (sets == "Three of a Kind") {
                     sets = "Full House";
-                } else if (sets === "Pair") {
+                } else if (sets == "Pair") {
                     sets = "Two Pair";
                 } else {
                     sets = "Pair";
@@ -155,7 +156,7 @@ export class Hand {
             }
         }
 
-        if (sets === "Pair" && pairRank >= 11) {
+        if (sets == "Pair" && pairRank >= 11) {
             sets = "Jacks or Better";
         }
         return sets;
@@ -173,7 +174,8 @@ export class Hand {
             return "Straight";
         } else {
             let sets = this.hasSets();
-            if (sets === "Pair" || sets === "none") {
+            console.log(sets);
+            if (sets == "Pair" || sets == "none") {
                 sets = "No Winner";
             }
             return sets;
@@ -199,7 +201,7 @@ export class Hand {
                 return 3;
             case "Two Pair":
                 return 2;
-            case "Jack or Better":
+            case "Jacks or Better":
                 return 1;
             default:
                 return 0;
