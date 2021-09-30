@@ -1,12 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const GamePreview = ({ msg, theme, img, route }) => {
+const GamePreview = ({ msg, theme, img, route, inTesting }) => {
     return (
 
         <div className={`transition duration-500 transform hover:-translate-y-1 hover:scale-105 hover:border-red-500 max-w-sm rounded overflow-hidden shadow-lg bg-white divide-y-2 divide-solid divide-red-blood`}>
             <img className={`w-full h-3/6 bg-black`} src={`${process.env.PUBLIC_URL}/images/${img}`} alt={`${img}`} />
-            <div className={`px-6 py-4 h-2/6`}>
+            <div className={`px-6 py-4 h-2/6 relative`}>
+                {inTesting && (
+                    <div className="w-24  overflow-hidden inline-block absolute top-0 right-0">
+                    <div className=" h-36  bg-red-bloodTrans -rotate-45 transform origin-top-left"><span className="rotate-90 transform absolute translate-y-14 font-bangers">In Testing</span></div>
+                </div>
+            )}
+            
                 <div className={`font-bold text-xl mb-2`}>{theme}</div>
                 <p className={`text-gray-700 text-base`}>
                     {msg}

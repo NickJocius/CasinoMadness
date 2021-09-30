@@ -8,6 +8,7 @@ module.exports = {
       colors: {
         red: {
           blood: "rgb(219, 11, 21)",
+          bloodTrans: "rgba(219,11,21,.5)"
         },
 
         gTitle: "rgb(230, 230, 230)",
