@@ -1,7 +1,7 @@
 
 .Hand {
     padding: 0;
-    min-height: 90vh;
+    min-height: 80vh;
     background: radial-gradient(
       farthest-corner,
       rgb(194, 1, 1),

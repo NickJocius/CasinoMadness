@@ -3,7 +3,7 @@ import styles from './PokerOdds.module.css';
 
 const PokerOdds = () => {
     return (
-        <section className={`${styles.PokerOdds} container mx-auto my-4 py-8`}>
+        <section className={`${styles.PokerOdds} container mx-auto my-4 py-8 row-span-2`}>
             <table className={`table-auto w-full pt-2 pb-2 font-bold text-white bg-black bg-opacity-80 py-6 text-xs md:text-base lg:text-lg`}>
                 <thead>
                     <tr>

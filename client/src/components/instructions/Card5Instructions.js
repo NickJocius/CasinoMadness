@@ -2,7 +2,7 @@ import React from 'react';
 
 const Card5Instructions = () => {
     return (
-        <div className={`container mx-auto flex justify-center text-white text-xl leading-snug py-8 my-8`}>
+        <div className={`container mx-auto flex justify-center text-white text-xl leading-snug py-8 my-8 row-span-2`}>
             <p className={`text-center text-sm md:text-lg lg:text-xl`}>
                 Click the <strong>New Game</strong> button to deal a new deck and start the game.
                 Select the size of your bet from the drop-down list box and then click
