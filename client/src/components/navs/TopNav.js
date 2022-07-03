@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import { FaBars } from 'react-icons/fa';
 import { Link, useHistory } from 'react-router-dom';
 import madLogo from '../../assets/images/madnesslogo.png';
+import { logout } from '../../features/user/userSlice';
 
 const TopNav = () => {
 
@@ -13,14 +14,13 @@ const TopNav = () => {
 
     const [toggled, setToggled] = useState(false);
 
-    const logout = () => {
-
-        firebase.auth().signOut();
-        dispatch({
-            type: "LOGOUT",
-            payload: null
+    const logsout = () => {
+        firebase.auth().signOut().then(() => {
+            dispatch(logout());
+            history.push('/login');
+        }).catch((err) => {
+            console.log(err)
         });
-        history.push('/login');
     }
 
     const handleToggled = (e) => {
@@ -48,7 +48,7 @@ const TopNav = () => {
                         </>
                     )}
                     {user && (
-                        <button className={`block w-full md:w-auto md:mr-4 md:inline-block text-white hover:text-red-blood px-3 py-3 border-b-2 border-red-blood md:border-none font-bangers`} onClick={logout}>Logout</button>
+                        <button className={`block w-full md:w-auto md:mr-4 md:inline-block text-white hover:text-red-blood px-3 py-3 border-b-2 border-red-blood md:border-none font-bangers`} onClick={logsout}>Logout</button>
                     )}
 
                 </div>

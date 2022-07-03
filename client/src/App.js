@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-import { auth } from './firebase';
+import { auth } from './utils/firebase/firebase.utils';
 import { useDispatch } from 'react-redux';
 import { getUserInfo } from './features/user/userSlice';
 
@@ -32,14 +32,10 @@ function App() {
 
   // check firebase auth state
   useEffect(() => {
-
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
-
       if (user) {
-
         // get user token
         const idTokenResult = await user.getIdTokenResult();
-
         // populate user in redux store
         dispatch(getUserInfo(idTokenResult.token))
           .then(
@@ -51,11 +47,8 @@ function App() {
           })
       }
     });
-
     // clean up
-
     return () => unsubscribe();
-
   }, [dispatch])
 
   return (

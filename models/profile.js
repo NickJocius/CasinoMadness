@@ -33,55 +33,76 @@ const profileSchema = new mongoose.Schema({
         type: String,
         default: "New Status"
     },
-    wins:
-    {
-        drawpoker: {
-            type: Number,
-            default: 0
+    wins: [
+        {
+            drawpoker: {
+                type: Number,
+                default: 0
+            },
         },
-        blackjack: {
-            type: Number,
-            default: 0
+        {
+            blackjack: {
+                type: Number,
+                default: 0
+            }
         },
-        craps: {
-            type: Number,
-            default: 0
+        {
+            craps: {
+                type: Number,
+                default: 0
+            }
         },
-        roullette: {
-            type: Number,
-            default: 0
+        {
+            roullette: {
+                type: Number,
+                default: 0
+            }
         },
-        slots: {
-            type: Number,
-            default: 0
+        {
+            slots: {
+                type: Number,
+                default: 0
+            }
         }
-    },
-    losses: {
-        drawpoker: {
-            type: Number,
-            default: 0
+    ],
+    losses: [
+        {
+            drawpoker: {
+                type: Number,
+                default: 0
+            }
         },
-        blackjack: {
-            type: Number,
-            default: 0
+        {
+            blackjack: {
+                type: Number,
+                default: 0
+            }
         },
-        craps: {
-            type: Number,
-            default: 0
+        {
+            craps: {
+                type: Number,
+                default: 0
+            }
         },
-        roullette: {
-            type: Number,
-            default: 0
+        {
+            roullette: {
+                type: Number,
+                default: 0
+            }
         },
-        slots: {
-            type: Number,
-            default: 0
+        {
+            slots: {
+                type: Number,
+                default: 0
+            }
+        },
+        {
+            date: {
+                type: Date,
+                default: Date.now
+            }
         }
-    },
-    date: {
-        type: Date,
-        default: Date.now
-    }
+    ],
 });
 
 module.exports = mongoose.model('Profile', profileSchema);

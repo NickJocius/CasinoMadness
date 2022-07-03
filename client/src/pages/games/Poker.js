@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUserProfile, updateProfile } from '../../functions/profile';
+import { getUsersProfile, updateUserProfile } from '../../features/profile/profileSlice';
 import GameHeader from '../../components/headers/GameHeader';
 import PokerTable from '../../components/gameTables/PokerTable';
 import GameButtons from '../../components/actionButtons/GameButtons';
@@ -48,14 +48,12 @@ const Poker = () => {
 
     const loadProfile = () => {
         let id = user._id;
+        const thunkObj = {id:id, token: user.token}
         setLoading(true);
-        getUserProfile(id, user.token)
+        dispatch(getUsersProfile(thunkObj))
             .then((res) => {
                 setLoading(false);
-                dispatch({
-                    type: 'GET_PROFILE',
-                    payload: res.data
-                });
+                
                 setValues({ ...values, ...res.data });
             }).catch((err) => {
                 setLoading(false);
@@ -66,16 +64,13 @@ const Poker = () => {
 
     useEffect(() => {
         loadProfile();
-    }, [updateProfile])
+    }, [updateUserProfile])
 
     const updatedProfile = (newValues) => {
         let userId = user._id;
-        updateProfile(userId, { newValues }, user.token)
+        dispatch(updateUserProfile(userId, { newValues }, user.token))
             .then((res) => {
-                dispatch({
-                    type: 'UPDATE_PROFILE',
-                    payload: res.data
-                });
+                
                 setValues({ ...values, ...res.data });
 
             }).catch((err) => {

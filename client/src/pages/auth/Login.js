@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { auth, googleAuthProvider } from '../../firebase';
+import {signInWithGooglePopup } from '../../utils/firebase/firebase.utils';
 import { toast } from 'react-toastify';
 import { AiFillMail, AiFillGoogleCircle } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import loadgif from '../../assets/images/loading.gif';
-import { createOrUpdateUser } from '../../functions/auth';
+import { newOrUpdateUser } from '../../features/user/userSlice';
+import { createOrUpdateProfile } from '../../services/profile';
 
 
 const Login = ({ history }) => {
@@ -33,83 +34,9 @@ const Login = ({ history }) => {
         }
     }
 
-    // handle submit
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        setLoading(true);
-
-        try {
-            const result = await auth.signInWithEmailAndPassword(email, password);
-            const { user } = result;
-            const idTokenResult = await user.getIdTokenResult();
-
-            createOrUpdateUser(idTokenResult.token)
-                .then(
-                    (res) => {
-                        dispatch({
-                            type: 'LOGGED_IN_USER',
-
-                            payload: {
-                                name: res.data.name,
-                                email: res.data.email,
-                                token: idTokenResult.token,
-                                role: res.data.role,
-                                _id: res.data._id,
-                            },
-
-                        });
-
-                        roleBasedRedirect(res);
-                    }
-
-                )
-                .catch((err) => {
-                    console.log(err.message);
-                })
-
-        } catch (error) {
-
-            console.log(error);
-            toast.error(error.message);
-            setLoading(false);
-        }
-
-    };
-
-    const googleLogin = async (e) => {
-        auth.signInWithPopup(googleAuthProvider).then(async (result) => {
-            const { user } = result
-            const idTokenResult = await user.getIdTokenResult();
-            createOrUpdateUser(idTokenResult.token)
-                .then(
-                    (res) => {
-                        dispatch({
-                            type: 'LOGGED_IN_USER',
-
-                            payload: {
-                                name: res.data.name,
-                                email: res.data.email,
-                                token: idTokenResult.token,
-                                role: res.data.role,
-                                _id: res.data._id,
-                            },
-
-                        });
-
-                        roleBasedRedirect(res);
-                    }
-
-                )
-                .catch((err) => {
-                    console.log(err.message);
-                })
-
-        })
-            .catch((err) => {
-                console.log(err);
-                toast.error(err.message);
-            })
+    const googleLogin = async () => {
+        const response = await signInWithGooglePopup();
+        console.log(response);
     };
 
     const loginForm = () => {
